@@ -6,7 +6,47 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="styles.css">
 		<link href='https://fonts.googleapis.com/css?family=Manufacturing Consent' rel='stylesheet'>
-		<script>			
+		<script>	
+			// Script for clickable button to start the invitation
+			function startInvitation() {
+				document.getElementById("backgroundbgm").play();
+				document.getElementById("btnOpen").remove();
+				document.querySelector('.vinyl').removeAttribute('hidden');
+				document.querySelector('.scroll_down').removeAttribute('hidden');
+				document.getElementById("down_arrow").style.visibility="visible";
+				document.querySelector('#welcome').removeAttribute('hidden');
+				document.querySelector('#quotes').removeAttribute('hidden');
+				document.querySelector('#invite').removeAttribute('hidden');
+				document.querySelector('#location').removeAttribute('hidden');
+				document.querySelector('#countdown').removeAttribute('hidden');
+				document.getElementById("welcome_image").src = "welcome_gif.gif";
+				// Code for changing the Wedding Invitation GIF into Image
+				const welcome_image_timeout = setTimeout (changeWelcomeImage,4000);
+				function changeWelcomeImage(){
+					document.getElementById("welcome_image").src = "welcome_image.jpg";
+					//document.getElementById("invitation_image").src = "invitation_image.jpg";
+				}
+				
+				//Code for getting the message scroll down along with down arrow after 6 sec.
+				const scroll_timeout = setTimeout (visibleScrollDown,6000);
+				function visibleScrollDown(){
+					document.getElementById("scroll_down").innerHTML = "Scroll Down";
+					document.getElementById("down_arrow").style.display = 'block';
+				}
+			}
+			
+			// Script for playing the audio				
+			function playPauseAudio() {
+				const animatedElement = document.getElementById("vinyl");
+				if (animatedElement.style.animationPlayState === 'paused' || animatedElement.style.animationPlayState === '') {
+					animatedElement.style.animationPlayState = 'running';
+					document.getElementById("backgroundbgm").play();
+				} else {
+					animatedElement.style.animationPlayState = 'paused';
+					document.getElementById("backgroundbgm").pause();
+				}
+			}
+			
 			// Set the date we're counting down to
 			var countDownDate = new Date("Dec 25, 2025 12:00:00").getTime();
 			
@@ -36,63 +76,113 @@
 				// If the count down is over, write some text 
 				if (distance < 0) {
 					clearInterval(x);
-					document.getElementById("countdown").innerHTML = "You miss the moment !!!";
+					document.getElementById("countdown_heading").innerHTML = "You miss the moment !!!";
 				}
 				else
 				{
-					document.getElementById("countdown").innerHTML = "COUNTDOWN...";
+					document.getElementById("countdown_heading").innerHTML = "Excited to see you in...";
 				}
 			}, 1000);
+			
+			// Code for making the Invitation div to visible and play the GIF
+			
+			/*window.addEventListener('scroll', function() {
+			const myElement = document.getElementById('invitation_image');
+			const scrollPosition = window.scrollY || document.documentElement.scrollTop; // Get current scroll position
+
+			// Define a scroll threshold where the element should appear/disappear
+			const startThreshold = 500; // Example: show/hide after scrolling 200px
+			const endThreshold = 1200;
+
+			if (scrollPosition > startThreshold && scrollPosition < endThreshold) {
+				myElement.src = "invitation_gif.gif";
+				const invitation_image_timeout = setTimeout (changeInvitationImage,5000);
+				function changeInvitationImage(){
+					myElement.src = "invitation_image.jpg";
+				}
+			} else {
+				myElement.src = "invitation_image.jpg";
+			}
+			});*/
+			
 		</script>
 	</head>
+	
+	<!-- Creating the Website for Wedding Invitation -->
+	<!-- Wedding Invitation contains 4 sections: -->
+	<!-- 1) Invitation -->
+	<!-- 2) Islamic Quotes -->
+	<!-- 3) Count Down -->
+	<!-- 4) Weeding Location -->
 	<body>
-		<div id="invitationpanel" class="invitationpanel">
-			<div class="quotes">
-				<p translate="no" style="text-align:center;font-size:15px;"><i>بسم الله الرحمن الرحيم</i></p>
-				<p translate="no" style="text-align:center;font-size:30px;">هُنَّ لِبَاسٌۭ لَّكُمْ وَأَنتُمْ لِبَاسٌۭ لَّهُنَّ</p>
-				<p style="text-align:center;font-size:25px;">“Your spouses are a garment for you as you are for them”</p>
-				<p style="text-align:center;font-size:20px;"> - Surah - Al - Baqarah , 2:187</p>
+		
+		<!-- Add the Background Music to entire web page -->
+		<audio id="backgroundbgm" class="backgroundbgm" controls autoplay loop hidden>
+			<source src="bgm.mp3" type="audio/mpeg">
+		</audio>
+		
+		<!-- Add the image of Black Vinyl Music instrument for the attraction -->
+		<img onclick="playPauseAudio()" id="vinyl" class="vinyl" src="vinyl.jpg" hidden></img>
+		
+		<!-- Creating the Space for Invitation Image along with background image (Or) video -->
+		<div id="invitation" class="invitation">
+			<button onclick="startInvitation()" id="btnOpen" class="btnOpen">Explore Invitation !!</button>
+			
+			<!-- Adding Scroll Down word along with Arrow Marks after 5 sec -->
+			<h3 id="scroll_down" class="scroll_down" hidden></h3>
+			<p id="down_arrow" class="down_arrow"></p>
+			
+			<!-- Attaching the image of Welcome design into this invitation -->
+			<div id="welcome" hidden>
+				<img id="welcome_image" src="welcome_image.jpg" alt="Welcome Image" class="welcome"></img>
 			</div>
-			<div id="maincontent" class="coverpage">
-				<img class="responsive" src="invitation_jpg.jpg" alt="invitation_details">
+		</div>
+			
+		<!-- Creating the Space for Islamic Quotes along with background color -->
+		<div id="quotes" class="quotes" hidden>
+			<p style="font-size:15px;text-align:center;"><i>بسم الله الرحمن الرحيم</i></p>
+			<p style="font-size:30px;text-align:center;">هُنَّ لِباسٌ لَكُم وَأَنتُم لِباسٌ لَهُنَّ</p>
+			<p style="font-size:20px;text-align:justify;">“Your spouses are a garment for you as you are for them”</p>
+			<p style="font-size:15px;text-align:right;"> - Surah - Al - Baqarah , 2:187</p>
+		</div>
+		
+		<!-- Attaching the GIF media of Welcome design into this invitation -->
+		<div id="invite" hidden>
+			<img id="invitation_image" src="invitation_image.jpg" alt="Invitation Image" class="invite"></img>
+		</div>
+		
+		<!-- Creating the Space for Wedding Location with background color -->
+		<div id="location" class="location" hidden>
+			<div>
+				<h1 style="padding-left:10px;">ASSEMBLE @</h1>
 			</div>
-			<div id="details" class="details">
-				<div class="countdown">
-					<h1 id="countdown"></h1>
-				</div>
-				<div id="timer">
-					<table class="timer">
-						<tr>
-							<td id="days" class="timer"></td><td class="separator">:</td>
-							<td id="hours" class="timer"></td><td class="separator">:</td>
-							<td id="minutes" class="timer"></td><td class="separator">:</td>
-							<td id="seconds" class="timer"></td>
-						</tr>
-						<tr>
-							<th class="timeheading">DAYS</th><th class="separator"></th>
-							<th class="timeheading">HOURS</th><th class="separator"></th>
-							<th class="timeheading">MINUTES</th><th class="separator"></th>
-							<th class="timeheading">SECONDS</th>
-						</tr>
-					</table>
-				</div>	
-				<hr>
-				<div id="otherdetails" class="grid-container">
-					<div class="grid-item">
-						<p><b>WEDDING LOCATION:</b></p>
-						<p>A.J.K. Mahal,</p>
-						<p>Ganapathy Nagar,</p>
-						<p>Mayiladuthurai.</p>
-					</div>
-					<div class="grid-item">
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3915.1664490503313!2d79.6435206!3d11.100969599999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5527bf87960791%3A0xb1ec1f576ee1f91d!2zQUpLIE1BSEFMIOCujy7grpzgr4cu4K6V4K-HLiDgrq7grrngrr7grrLgr40!5e0!3m2!1sen!2sae!4v1758374171167!5m2!1sen!2sae" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-					</div>
-				</div>
+			<div class="grid-item">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3915.1664490503313!2d79.6435206!3d11.100969599999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5527bf87960791%3A0xb1ec1f576ee1f91d!2zQUpLIE1BSEFMIOCujy7grpzgr4cu4K6V4K-HLiDgrq7grrngrr7grrLgr40!5e0!3m2!1sen!2sae!4v1758734645417!5m2!1sen!2sae"  style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			</div>
+		</div>
+		
+		<!-- Creating the Space for countdown timer -->
+		<div id="countdown" class="countdown" hidden>
+			<div class="countdown_heading">
+				<h1 id="countdown_heading"></h1>
+			</div>
+			<hr>
+			<div id="timer">
+				<table class="timer">
+					<tr>
+						<td id="days" class="timer"></td><td class="separator">:</td>
+						<td id="hours" class="timer"></td><td class="separator">:</td>
+						<td id="minutes" class="timer"></td><td class="separator">:</td>
+						<td id="seconds" class="timer"></td>
+					</tr>
+					<tr>
+						<th class="timeheading">DAYS</th><th class="separator"></th>
+						<th class="timeheading">HOURS</th><th class="separator"></th>
+						<th class="timeheading">MINUTES</th><th class="separator"></th>
+						<th class="timeheading">SECONDS</th>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</body>
-
 </html>
-
-
-
